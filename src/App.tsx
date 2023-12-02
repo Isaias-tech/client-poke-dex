@@ -1,9 +1,11 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import AuthLayout from "./pages/auth/AuthLayout";
-import Pokemons from "./pages/pokemons/Pokemons";
+import PokemonsLayout from "./pages/pokemons/PokemonsLayout";
 import AuthProvider from "./components/AuthProvider";
 import SignIn from "./pages/auth/components/SignIn";
 import SignUp from "./pages/auth/components/SignUp";
+import FavoritePokemons from "./pages/pokemons/components/FavoritePokemons";
+import AllPokemons from "./pages/pokemons/components/AllPokemons";
 
 const App = () => {
 	return (
@@ -14,14 +16,14 @@ const App = () => {
 					<Route path="sign-up" element={<SignUp />} />
 				</Route>
 				<Route element={<AuthProvider />}>
-					<Route element={<Pokemons />}>
+					<Route element={<PokemonsLayout />}>
 						<Route
 							path="/pokemons/favorites"
-							element={<div>Favorite pokemons</div>}
+							element={<FavoritePokemons />}
 						/>
 						<Route
 							path="/pokemons/all"
-							element={<div>All pokemons</div>}
+							element={<AllPokemons />}
 						/>
 					</Route>
 				</Route>

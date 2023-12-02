@@ -13,7 +13,7 @@ const NavBar = () => {
 						alt="Pokemon logo"
 						className="w-full max-w-[200px] p-2"
 					/>
-					<div className="sm:hidden">
+					<div className="sm:hidden p-2">
 						<HamMenu>
 							<NavBarActions />
 						</HamMenu>

@@ -8,12 +8,13 @@
 	margin: 0;
 }
 
-#root {
-	width: 100vw;
-	height: 100vh;
+body {
 	background-image: url("./assets/pockeball-bg.png");
 	background-repeat: repeat;
 	background-size: 492px;
+}
+
+#root {
 	display: flex;
 	justify-content: center;
 	align-items: center;
