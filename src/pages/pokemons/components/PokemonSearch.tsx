@@ -10,7 +10,7 @@ const PokemonSearch = () => {
 					label="Search pokémon..."
 				/>
 			</div>
-			<div className="w-[95%] sm:w-full sm:max-w-[225px] p-4 pt-2 sm:pt-4">
+			<div className="w-[95%] sm:w-full sm:max-w-[225px] min-w-[215px] p-4 pt-2 sm:pt-4">
 				<Button
 					sx={{ p: "15px" }}
 					color="success"
