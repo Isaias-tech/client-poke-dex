@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import PokemonLogo from "../assets/International_Pokémon_logo.svg";
+import PokemonLogo from "../../assets/International_Pokémon_logo.svg";
 
 const AuthLayout = () => {
 	return (

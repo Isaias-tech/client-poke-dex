@@ -1,10 +1,10 @@
 import { Button, TextField } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { isFieldValid } from "../utils/validators";
-import { signInService } from "../services/authentication";
+import { isFieldValid } from "../../../utils/validators";
+import { signInService } from "../../../services/authentication";
 import Cookies from "js-cookie";
-import PasswordInput from "./PasswordInput";
+import PasswordInput from "../../../components/PasswordInput";
 
 const SignIn = () => {
 	const [form, setForm] = useState({
@@ -93,6 +93,7 @@ const SignIn = () => {
 						variant="outlined"
 						size="medium"
 						fullWidth
+						sx={{ p: "15px" }}
 					>
 						Sign up
 					</Button>
@@ -103,6 +104,7 @@ const SignIn = () => {
 						variant="contained"
 						size="medium"
 						fullWidth
+						sx={{ p: "15px" }}
 					>
 						Sign in
 					</Button>

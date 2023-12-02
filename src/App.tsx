@@ -1,9 +1,9 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import AuthLayout from "./pages/AuthLayout";
-import Pokemons from "./pages/Pokemons";
+import AuthLayout from "./pages/auth/AuthLayout";
+import Pokemons from "./pages/pokemons/Pokemons";
 import AuthProvider from "./components/AuthProvider";
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
+import SignIn from "./pages/auth/components/SignIn";
+import SignUp from "./pages/auth/components/SignUp";
 
 const App = () => {
 	return (
