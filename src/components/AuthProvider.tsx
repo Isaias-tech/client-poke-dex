@@ -1,7 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
+import Cookies from "js-cookie";
 
-const AuthProvider = ({ authenticated }: { authenticated: boolean }) => {
-	if (!authenticated) {
+const AuthProvider = () => {
+	const isAuthorized = Cookies.get("authorized");
+
+	if (!isAuthorized) {
 		return <Navigate to="/sign-in" />;
 	}
 	return <Outlet />;
