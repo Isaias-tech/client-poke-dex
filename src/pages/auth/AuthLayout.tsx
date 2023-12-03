@@ -1,7 +1,18 @@
 import { Outlet } from "react-router-dom";
 import PokemonLogo from "../../assets/International_Pokémon_logo.svg";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { resetPokemons } from "../../store/pokemonSlice";
+import { setLoading } from "../../store/loadingSlice";
 
 const AuthLayout = () => {
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(resetPokemons());
+		dispatch(setLoading({ isLoading: false }));
+	});
+
 	return (
 		<div className="container w-[100vw] h-[100vh] flex flex-col  items-center">
 			<img
