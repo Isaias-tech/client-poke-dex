@@ -4,12 +4,12 @@ import { Button, Fade, Modal, TextField } from "@mui/material";
 import { useSnackbar } from "notistack";
 import PokemonCard from "./PokemonCard";
 import { getPokemon } from "../../../services/pokemon.services";
-import { addFavoritePokemon } from "../../../store/pokemonSlice";
 import { RootState } from "../../../store/store";
 import { addFavoritePokemonLS } from "../../../utils/favoritePokemonsHandler";
 import { snackBarOpts } from "../../../utils/constants";
 import PokemonLogo from "../../../assets/International_Pokémon_logo.svg";
 import { Pokemon } from "../../../types/Pokemon";
+import { addFavoritePokemons } from "../../../store/pokemonSlice";
 
 const PokemonSearch = () => {
 	const pokemons = useSelector((state: RootState) => state.pokemonReducer);
@@ -30,7 +30,7 @@ const PokemonSearch = () => {
 			});
 			return;
 		}
-		dispatch(addFavoritePokemon(pokemon));
+		dispatch(addFavoritePokemons([pokemon]));
 		addFavoritePokemonLS(pokemon.name);
 		enqueueSnackbar("The favorite was added.", { ...snackBarOpts.success });
 		handleCloseModal();
@@ -55,7 +55,7 @@ const PokemonSearch = () => {
 	};
 
 	return (
-		<div className="max-w-[1300px] w-full bg-white border-2 rounded-xl min-h-[10vh] flex items-center flex-col sm:flex-row">
+		<div className="max-w-[1300px] w-[80%] bg-white border-2 rounded-xl min-h-[10vh] flex items-center flex-col sm:flex-row">
 			<div className="w-[95%] sm:w-full p-4 pb-2 sm:pb-4">
 				<TextField
 					variant="outlined"

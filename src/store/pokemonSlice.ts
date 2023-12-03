@@ -21,11 +21,8 @@ export const pokemonsSlice = createSlice({
 		resetPokemons: (state) => {
 			state.pokemons = [];
 		},
-		addFavoritePokemon: (state, action: PayloadAction<Pokemon>) => {
-			state.favoritePokemons.push(action.payload);
-		},
 		addFavoritePokemons: (state, action: PayloadAction<Pokemon[]>) => {
-			state.favoritePokemons = [...state.pokemons, ...action.payload];
+			state.favoritePokemons = [...state.favoritePokemons, ...action.payload];
 		},
 		removeFavoritePokemon: (state, action: PayloadAction<Pokemon>) => {
 			state.favoritePokemons = state.favoritePokemons.filter(
@@ -42,7 +39,6 @@ export const {
 	addPokemons,
 	setPokemon,
 	resetPokemons,
-	addFavoritePokemon,
 	addFavoritePokemons,
 	setNextOfsetLimit,
 	removeFavoritePokemon,

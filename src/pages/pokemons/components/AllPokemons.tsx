@@ -5,19 +5,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { setLoading } from "../../../store/loadingSlice";
 import {
-	addFavoritePokemon,
 	addFavoritePokemons,
 	addPokemons,
 	setNextOfsetLimit,
 } from "../../../store/pokemonSlice";
-import {
-	getFavoritePokemons,
-	getPokemons,
-} from "../../../services/pokemon.services";
+import { getPokemons } from "../../../services/pokemon.services";
 import { addFavoritePokemonLS } from "../../../utils/favoritePokemonsHandler";
 import { snackBarOpts } from "../../../utils/constants";
 import { Pokemon } from "../../../types/Pokemon";
 import PokemonCard from "./PokemonCard";
+import { isAuthenticated } from "../../../services/authentication.services";
+import { useNavigate } from "react-router-dom";
 
 const AllPokemons = () => {
 	const pokemons = useSelector((state: RootState) => state.pokemonReducer);
@@ -28,7 +26,7 @@ const AllPokemons = () => {
 	const { enqueueSnackbar } = useSnackbar();
 	const firstDataLoaded = useRef(false);
 	const dispatch = useDispatch();
-
+	const navigate = useNavigate();
 
 	const handleAddToFavorites = (pokemon: Pokemon) => {
 		if (pokemons.favoritePokemons.find((p) => p.name == pokemon.name)) {
@@ -37,11 +35,11 @@ const AllPokemons = () => {
 			});
 			return;
 		}
-		dispatch(addFavoritePokemon(pokemon));
+		dispatch(addFavoritePokemons([pokemon]));
 		addFavoritePokemonLS(pokemon.name);
 		enqueueSnackbar("The favorite was added.", { ...snackBarOpts.success });
 	};
-	
+
 	const handleDataLoad = async () => {
 		dispatch(setLoading({ isLoading: true }));
 		const data = await getPokemons(pokemons.nextOfsetLimit);
@@ -53,21 +51,12 @@ const AllPokemons = () => {
 		dispatch(setLoading({ isLoading: false }));
 	};
 
-	const loadFavoritePokemons = async () => {
-		const favPokemons = await getFavoritePokemons();
-		if (favPokemons) {
-			dispatch(addFavoritePokemons(favPokemons));
-		}
-	};
-
 	useEffect(() => {
-		if (pokemons.favoritePokemons.length == 0) {
-			loadFavoritePokemons();
-		}
+		if (!isAuthenticated().valid) navigate("/sign-in");
 		if (firstDataLoaded.current || pokemons.pokemons.length > 0) return;
 		firstDataLoaded.current = true;
 		handleDataLoad();
-	});
+	}, []);
 
 	const CircleLoading = () => (
 		<div className="w-full h-full grid place-items-center">

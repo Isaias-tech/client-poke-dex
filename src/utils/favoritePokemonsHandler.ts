@@ -6,7 +6,10 @@ export const getCurrentUser = (): User | undefined => {
 	const email = Cookies.get("authorized");
 	if (!email) return;
 	let currentUser = localStorage.getItem(email);
-	if (!currentUser) return;
+	if (!currentUser) {
+		Cookies.remove("authorized");
+		return;
+	}
 	return JSON.parse(currentUser);
 };
 

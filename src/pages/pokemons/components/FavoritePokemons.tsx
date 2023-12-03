@@ -13,6 +13,8 @@ import { removeFavoritePokemonLS } from "../../../utils/favoritePokemonsHandler"
 import { snackBarOpts } from "../../../utils/constants";
 import { getFavoritePokemons } from "../../../services/pokemon.services";
 import { Pokemon } from "../../../types/Pokemon";
+import { isAuthenticated } from "../../../services/authentication.services";
+import { useNavigate } from "react-router-dom";
 
 const FavoritePokemons = () => {
 	const pokemons = useSelector((state: RootState) => state.pokemonReducer);
@@ -24,6 +26,7 @@ const FavoritePokemons = () => {
 	const { enqueueSnackbar } = useSnackbar();
 	const firstDataLoaded = useRef(false);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const handleOpenModal = (pokemon: Pokemon) => {
 		setOpenModal(true);
@@ -52,6 +55,7 @@ const FavoritePokemons = () => {
 	};
 
 	useEffect(() => {
+		if (!isAuthenticated().valid) navigate("/sign-in");
 		if (firstDataLoaded.current || pokemons.favoritePokemons.length > 0)
 			return;
 		firstDataLoaded.current = true;

@@ -21,7 +21,6 @@ export const signInService = (email: string, password: string) => {
 	const isUserValid = user.email == email && user.password == password;
 	if (isUserValid) {
 		Cookies.set("authorized", email, { expires: 1 });
-		return isUserValid;
 	}
 	return isUserValid;
 };
