@@ -113,7 +113,7 @@ const SignUp = () => {
 				<div className="p-2"></div>
 				<PasswordInput
 					isValid={!isFormFieldInvalid(form.password.validity)}
-					helperText="The password is not valid."
+					helperText={`The password is not valid. Must include:\n Upper and lower case letters.\n At least one number.\n No simbols.\n A length of at least 8 characters.`}
 					label="Password"
 					name="password"
 					onChange={handleFormChange}
