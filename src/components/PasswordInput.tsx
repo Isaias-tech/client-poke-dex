@@ -9,12 +9,9 @@ const PasswordInput = ({
 	onChange,
 	variant,
 	name,
-	label
+	label,
 }: PasswordInputProps) => {
 	const [showPassword, setShowPassword] = useState(false);
-
-	const handleMouseDown = () => setShowPassword(true);
-	const handleMouseUp = () => setShowPassword(false);
 
 	return (
 		<TextField
@@ -30,8 +27,9 @@ const PasswordInput = ({
 					<InputAdornment position="end">
 						<IconButton
 							aria-label="toggle password visibility"
-							onMouseUp={handleMouseUp}
-							onMouseDown={handleMouseDown}
+							onClick={() => {
+								setShowPassword((prev) => !prev);
+							}}
 						>
 							{showPassword ? <Visibility /> : <VisibilityOff />}
 						</IconButton>

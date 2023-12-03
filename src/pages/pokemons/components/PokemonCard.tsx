@@ -8,7 +8,7 @@ const PokemonCard = ({ children, pokemon }: PokemonCardProps) => {
 		>
 			<div className="pt-4 max-w-[150px] max-h-[150px]">
 				<img
-					className="object-contain w-full h-full"
+					className="object-contain w-full h-full max-w-[150px] max-h-[150px]"
 					src={pokemon.image}
 					alt="Pokemon"
 				/>
