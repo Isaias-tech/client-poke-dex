@@ -2,9 +2,13 @@ import { Button, TextField } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isFieldValid } from "../../../utils/validators";
-import { signInService } from "../../../services/authentication";
-import Cookies from "js-cookie";
+import {
+	isAuthenticated,
+	signInService,
+} from "../../../services/authentication.services";
 import PasswordInput from "../../../components/PasswordInput";
+import { setLoading } from "../../../store/loadingSlice";
+import { useDispatch } from "react-redux";
 
 const SignIn = () => {
 	const [form, setForm] = useState({
@@ -14,10 +18,10 @@ const SignIn = () => {
 	const [isFormValid, setIsFormValid] = useState(true);
 	const [noUser, setNoUser] = useState(false);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const isAuthorized = Cookies.get("authorized");
-		if (isAuthorized) navigate("/pokemons/all");
+		if (isAuthenticated().valid) navigate("/pokemons/all");
 	});
 
 	const onSignUp = () => {
@@ -46,7 +50,7 @@ const SignIn = () => {
 
 		const res = signInService(form.email.value, form.password.value);
 		if (res) {
-			Cookies.set("authorized", form.email.value, { expires: 0.04 });
+			dispatch(setLoading({ isLoading: true }));
 			navigate("/pokemons/all");
 		} else {
 			setNoUser(true);

@@ -1,15 +1,27 @@
 import { Drawer } from "@mui/material";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Divide as Hamburger } from "hamburger-react";
+import { useLocation } from "react-router-dom";
 
 const HamMenu = ({ children }: { children: ReactNode }) => {
 	const [openDrawer, setOpenDrawer] = useState(false);
+	const location = useLocation();
+
+	useEffect(() => {
+		setOpenDrawer(false);
+	}, [location]);
 
 	const handleDrawer = () => setOpenDrawer((prev) => !prev);
 
 	return (
 		<>
-			<Hamburger toggled={openDrawer} onToggle={handleDrawer} size={40} color="#2C6CB4" rounded  />
+			<Hamburger
+				toggled={openDrawer}
+				onToggle={handleDrawer}
+				size={40}
+				color="#2C6CB4"
+				rounded
+			/>
 			<Drawer
 				anchor="left"
 				open={openDrawer}

@@ -18,7 +18,7 @@ const NavBar = () => {
 							<NavBarActions />
 						</HamMenu>
 					</div>
-					<div className="hidden sm:flex">
+					<div className="hidden m-1 sm:flex">
 						<NavBarActions />
 					</div>
 				</div>

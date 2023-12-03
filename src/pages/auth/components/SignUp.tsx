@@ -2,10 +2,14 @@ import { Button, TextField } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isFieldValid } from "../../../utils/validators";
-import { signUpService } from "../../../services/authentication";
+import {
+	isAuthenticated,
+	signUpService,
+} from "../../../services/authentication.services";
 import { User } from "../../../types/User";
-import Cookies from "js-cookie";
 import PasswordInput from "../../../components/PasswordInput";
+import { useSnackbar } from "notistack";
+import { snackBarOpts } from "../../../utils/constants";
 
 const SignUp = () => {
 	const [form, setForm] = useState({
@@ -16,11 +20,11 @@ const SignUp = () => {
 	});
 	const [isFormValid, setIsFormValid] = useState(true);
 
+	const { enqueueSnackbar } = useSnackbar();
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const isAuthorized = Cookies.get("authorized");
-		if (isAuthorized) navigate("/pokemons/all");
+		if (isAuthenticated().valid) navigate("/pokemons/all");
 	});
 
 	const onSignIn = () => {
@@ -50,8 +54,9 @@ const SignUp = () => {
 
 		const user: User = {
 			fullName: form.fullName.value,
-			email: form.email.value,
+			email: form.email.value.toLowerCase(),
 			password: form.password.value,
+			favorites: []
 		};
 
 		const res = signUpService(user);
@@ -62,7 +67,13 @@ const SignUp = () => {
 				email: { value: "", validity: false },
 			}));
 			setIsFormValid(false);
+			enqueueSnackbar("There was an error while creating the user.", {
+				...snackBarOpts.error,
+			});
 		} else {
+			enqueueSnackbar("The user was created.", {
+				...snackBarOpts.success,
+			});
 			navigate("/sign-in");
 		}
 	};
