@@ -1,0 +1,29 @@
+name: Deploy Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Deploy-to-vps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH into VPS and deploy
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /var/www/pokedex.isaias-tech.com
+            git pull origin main
+            rm -r dist
+            docker build . --tag poke_dex_build
+            docker run --name client-poke-dex poke_dex_build
+            docker cp client-poke-dex:/app/dist ./ 
+            docker rm client-poke-dex
+            docker rmi poke_dex_build
+            systemctl restart nginx
+            systemctl status nginx
