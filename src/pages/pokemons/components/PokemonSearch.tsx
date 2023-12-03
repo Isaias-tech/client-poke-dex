@@ -1,30 +1,30 @@
-import { Button, Fade, Modal, TextField } from "@mui/material";
 import { useState } from "react";
-import { getPokemon } from "../../../services/pokemon.services";
-import { Pokemon } from "../../../types/Pokemon";
-import PokemonCard from "./PokemonCard";
-import PokemonLogo from "../../../assets/International_Pokémon_logo.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/store";
-import { addFavoritePokemon } from "../../../store/pokemonSlice";
+import { Button, Fade, Modal, TextField } from "@mui/material";
 import { useSnackbar } from "notistack";
-import { snackBarOpts } from "../../../utils/constants";
+import PokemonCard from "./PokemonCard";
+import { getPokemon } from "../../../services/pokemon.services";
+import { addFavoritePokemon } from "../../../store/pokemonSlice";
+import { RootState } from "../../../store/store";
 import { addFavoritePokemonLS } from "../../../utils/favoritePokemonsHandler";
+import { snackBarOpts } from "../../../utils/constants";
+import PokemonLogo from "../../../assets/International_Pokémon_logo.svg";
+import { Pokemon } from "../../../types/Pokemon";
 
 const PokemonSearch = () => {
 	const pokemons = useSelector((state: RootState) => state.pokemonReducer);
-	const { enqueueSnackbar } = useSnackbar();
 	const [pokemonName, setPokemonName] = useState("");
 	const [pokemon, setPokemon] = useState<Pokemon>();
-	const [open, setOpen] = useState(false);
+	const [openModal, setOpenModal] = useState(false);
+	const { enqueueSnackbar } = useSnackbar();
 	const dispatch = useDispatch();
 
-	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
+	const handleOpenModal = () => setOpenModal(true);
+	const handleCloseModal = () => setOpenModal(false);
 
 	const handleAddToFavorites = (pokemon: Pokemon) => {
 		if (pokemons.favoritePokemons.find((p) => p.name == pokemon.name)) {
-			handleClose();
+			handleCloseModal();
 			enqueueSnackbar("Favorite already exists.", {
 				...snackBarOpts.error,
 			});
@@ -33,7 +33,7 @@ const PokemonSearch = () => {
 		dispatch(addFavoritePokemon(pokemon));
 		addFavoritePokemonLS(pokemon.name);
 		enqueueSnackbar("The favorite was added.", { ...snackBarOpts.success });
-		handleClose();
+		handleCloseModal();
 	};
 
 	const handleSearch = async () => {
@@ -46,7 +46,7 @@ const PokemonSearch = () => {
 			(pokemon.image && pokemon.image != PokemonLogo)
 		) {
 			setPokemon(pokemon);
-			handleOpen();
+			handleOpenModal();
 		} else {
 			enqueueSnackbar("No pokémon was found.", {
 				...snackBarOpts.error,
@@ -75,54 +75,54 @@ const PokemonSearch = () => {
 				>
 					Search pokémon
 				</Button>
-				{pokemon && (
-					<Modal
-						aria-labelledby="transition-modal-title"
-						aria-describedby="transition-modal-description"
-						open={open}
-						onClose={handleClose}
-						closeAfterTransition
-						slotProps={{
-							backdrop: {
-								timeout: 500,
-							},
-						}}
-					>
-						<Fade in={open}>
-							<div
-								className="absolute top-[50%] left-[50%]	"
-								style={{
-									transform: "translate(-50%, -50%)",
-									borderColor: "#EF4036",
-								}}
-							>
-								<PokemonCard pokemon={pokemon}>
-									<div className="w-full flex flex-row justify-evenly">
-										<Button
-											variant="outlined"
-											color="success"
-											onClick={() =>
-												handleAddToFavorites(pokemon)
-											}
-											sx={{ p: "10px" }}
-										>
-											Add to favorites
-										</Button>
-										<Button
-											variant="contained"
-											color="success"
-											onClick={handleClose}
-											sx={{ p: "10px" }}
-										>
-											Close
-										</Button>
-									</div>
-								</PokemonCard>
-							</div>
-						</Fade>
-					</Modal>
-				)}
 			</div>
+			{pokemon && (
+				<Modal
+					aria-labelledby="transition-modal-title"
+					aria-describedby="transition-modal-description"
+					open={openModal}
+					onClose={handleCloseModal}
+					closeAfterTransition
+					slotProps={{
+						backdrop: {
+							timeout: 500,
+						},
+					}}
+				>
+					<Fade in={openModal}>
+						<div
+							className="absolute top-[50%] left-[50%]	"
+							style={{
+								transform: "translate(-50%, -50%)",
+								borderColor: "#EF4036",
+							}}
+						>
+							<PokemonCard pokemon={pokemon}>
+								<div className="w-full flex flex-row justify-evenly">
+									<Button
+										variant="outlined"
+										color="success"
+										onClick={() =>
+											handleAddToFavorites(pokemon)
+										}
+										sx={{ p: "10px" }}
+									>
+										Add to favorites
+									</Button>
+									<Button
+										variant="contained"
+										color="success"
+										onClick={handleCloseModal}
+										sx={{ p: "10px" }}
+									>
+										Close
+									</Button>
+								</div>
+							</PokemonCard>
+						</div>
+					</Fade>
+				</Modal>
+			)}
 		</div>
 	);
 };

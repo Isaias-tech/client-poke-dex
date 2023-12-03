@@ -1,6 +1,7 @@
 import { User } from "../types/User";
 import Cookies from "js-cookie";
 
+// Saves a new user to the LocalStorage
 export const signUpService = (user: User) => {
 	const email = localStorage.getItem(user.email);
 	if (email) {
@@ -10,6 +11,7 @@ export const signUpService = (user: User) => {
 	return true;
 };
 
+// Signs in and create the authorized cookie with a expiration time of one day
 export const signInService = (email: string, password: string) => {
 	const credentials = localStorage.getItem(email);
 	if (!credentials) {
@@ -18,12 +20,13 @@ export const signInService = (email: string, password: string) => {
 	const user: User = JSON.parse(credentials);
 	const isUserValid = user.email == email && user.password == password;
 	if (isUserValid) {
-		Cookies.set("authorized", email, { expires: 0.04 });
+		Cookies.set("authorized", email, { expires: 1 });
 		return isUserValid;
 	}
 	return isUserValid;
 };
 
+// Verifies if there is an authorized user and returns it's email
 export const isAuthenticated = (): { valid: boolean; email: string } => {
 	const authorized = Cookies.get("authorized");
 	if (authorized) {

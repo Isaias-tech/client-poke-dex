@@ -62,6 +62,7 @@ export const getPokemons = async (next = "") => {
 	};
 };
 
+// Gets all the pokemons saved on the LocalStorage
 export const getFavoritePokemons = async () => {
 	const user = getCurrentUser();
 	if (!user) return;

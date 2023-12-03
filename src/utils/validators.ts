@@ -8,6 +8,7 @@ export const validatePassword = (password: string) => {
 	return re.test(password);
 };
 
+// Validates Sign in and Sign up field forms.
 export const isFieldValid = (name: string, value: string) => {
 	let validity = true;
 	if (name == "fullName") validity = value.length > 0;

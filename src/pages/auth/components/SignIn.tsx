@@ -1,14 +1,14 @@
-import { Button, TextField } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { isFieldValid } from "../../../utils/validators";
+import { setLoading } from "../../../store/loadingSlice";
+import { Button, TextField } from "@mui/material";
 import {
 	isAuthenticated,
 	signInService,
 } from "../../../services/authentication.services";
+import { isFieldValid } from "../../../utils/validators";
 import PasswordInput from "../../../components/PasswordInput";
-import { setLoading } from "../../../store/loadingSlice";
-import { useDispatch } from "react-redux";
 
 const SignIn = () => {
 	const [form, setForm] = useState({
@@ -24,7 +24,7 @@ const SignIn = () => {
 		if (isAuthenticated().valid) navigate("/pokemons/all");
 	});
 
-	const onSignUp = () => {
+	const handleSignUp = () => {
 		navigate("/sign-up");
 	};
 
@@ -32,7 +32,7 @@ const SignIn = () => {
 		return !isFormValid && !fv;
 	};
 
-	const onFormChange = (
+	const handleFormChange = (
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 	) => {
 		const validity = isFieldValid(e.target.name, e.target.value);
@@ -43,7 +43,7 @@ const SignIn = () => {
 		setNoUser(false);
 	};
 
-	const onFormSubmit = () => {
+	const handleFormSubmit = () => {
 		const fv = Object.values(form).every((field) => field.validity == true);
 		setIsFormValid(fv);
 		if (!fv) return;
@@ -72,7 +72,7 @@ const SignIn = () => {
 					name="email"
 					autoComplete="off"
 					size="medium"
-					onChange={(e) => onFormChange(e)}
+					onChange={(e) => handleFormChange(e)}
 				/>
 				<div className="p-2"></div>
 				<PasswordInput
@@ -80,7 +80,7 @@ const SignIn = () => {
 					helperText="The password is not valid."
 					label="Password"
 					name="password"
-					onChange={onFormChange}
+					onChange={handleFormChange}
 					variant="outlined"
 				/>
 			</div>
@@ -93,7 +93,7 @@ const SignIn = () => {
 				<div className="w-[43%]">
 					<Button
 						className="w-[40%]"
-						onClick={onSignUp}
+						onClick={handleSignUp}
 						variant="outlined"
 						size="medium"
 						fullWidth
@@ -104,7 +104,7 @@ const SignIn = () => {
 				</div>
 				<div className="w-[43%]">
 					<Button
-						onClick={onFormSubmit}
+						onClick={handleFormSubmit}
 						variant="contained"
 						size="medium"
 						fullWidth

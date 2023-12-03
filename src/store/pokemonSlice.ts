@@ -1,11 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Pokemon } from "../types/Pokemon";
-
-export interface PokemonState {
-	pokemons: Pokemon[];
-	nextOfsetLimit: string;
-	favoritePokemons: Pokemon[];
-}
+import { PokemonState } from "../types/PokemonState";
 
 const initialState: PokemonState = {
 	pokemons: [],

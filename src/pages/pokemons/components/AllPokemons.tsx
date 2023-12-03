@@ -1,52 +1,34 @@
-import { Button, CircularProgress } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import {
-	getFavoritePokemons,
-	getPokemons,
-} from "../../../services/pokemon.services";
-import PokemonCard from "./PokemonCard";
+import { Button, CircularProgress } from "@mui/material";
+import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
+import { setLoading } from "../../../store/loadingSlice";
 import {
 	addFavoritePokemon,
 	addFavoritePokemons,
 	addPokemons,
 	setNextOfsetLimit,
 } from "../../../store/pokemonSlice";
-import { setLoading } from "../../../store/loadingSlice";
-import { Pokemon } from "../../../types/Pokemon";
-import { useSnackbar } from "notistack";
-import { snackBarOpts } from "../../../utils/constants";
+import {
+	getFavoritePokemons,
+	getPokemons,
+} from "../../../services/pokemon.services";
 import { addFavoritePokemonLS } from "../../../utils/favoritePokemonsHandler";
+import { snackBarOpts } from "../../../utils/constants";
+import { Pokemon } from "../../../types/Pokemon";
+import PokemonCard from "./PokemonCard";
 
 const AllPokemons = () => {
 	const pokemons = useSelector((state: RootState) => state.pokemonReducer);
 	const loadingState = useSelector(
 		(state: RootState) => state.loadingReducer
 	);
-	const { enqueueSnackbar } = useSnackbar();
 	const [allPokemonsLoaded, setAllPokemonsLoaded] = useState(false);
+	const { enqueueSnackbar } = useSnackbar();
+	const firstDataLoaded = useRef(false);
 	const dispatch = useDispatch();
 
-	const firstDataLoaded = useRef(false);
-
-	const handleDataLoad = async () => {
-		dispatch(setLoading({ isLoading: true }));
-		const data = await getPokemons(pokemons.nextOfsetLimit);
-		if (Number.parseInt(data.next.split("=").reverse()[0]) < 20) {
-			setAllPokemonsLoaded(true);
-		}
-		dispatch(setNextOfsetLimit(data.next));
-		dispatch(addPokemons(data.pokemons));
-		dispatch(setLoading({ isLoading: false }));
-	};
-
-	const getFavPokemons = async () => {
-		const favPokemons = await getFavoritePokemons();
-		if (favPokemons) {
-			dispatch(addFavoritePokemons(favPokemons));
-		}
-	};
 
 	const handleAddToFavorites = (pokemon: Pokemon) => {
 		if (pokemons.favoritePokemons.find((p) => p.name == pokemon.name)) {
@@ -59,10 +41,28 @@ const AllPokemons = () => {
 		addFavoritePokemonLS(pokemon.name);
 		enqueueSnackbar("The favorite was added.", { ...snackBarOpts.success });
 	};
+	
+	const handleDataLoad = async () => {
+		dispatch(setLoading({ isLoading: true }));
+		const data = await getPokemons(pokemons.nextOfsetLimit);
+		if (Number.parseInt(data.next.split("=").reverse()[0]) < 20) {
+			setAllPokemonsLoaded(true);
+		}
+		dispatch(setNextOfsetLimit(data.next));
+		dispatch(addPokemons(data.pokemons));
+		dispatch(setLoading({ isLoading: false }));
+	};
+
+	const loadFavoritePokemons = async () => {
+		const favPokemons = await getFavoritePokemons();
+		if (favPokemons) {
+			dispatch(addFavoritePokemons(favPokemons));
+		}
+	};
 
 	useEffect(() => {
 		if (pokemons.favoritePokemons.length == 0) {
-			getFavPokemons();
+			loadFavoritePokemons();
 		}
 		if (firstDataLoaded.current || pokemons.pokemons.length > 0) return;
 		firstDataLoaded.current = true;

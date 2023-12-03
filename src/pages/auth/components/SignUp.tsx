@@ -27,7 +27,7 @@ const SignUp = () => {
 		if (isAuthenticated().valid) navigate("/pokemons/all");
 	});
 
-	const onSignIn = () => {
+	const handleSignIn = () => {
 		navigate("/sign-in");
 	};
 
@@ -35,7 +35,7 @@ const SignUp = () => {
 		return !isFormValid && !fv;
 	};
 
-	const onFormChange = (
+	const handleFormChange = (
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 	) => {
 		let validity = isFieldValid(e.target.name, e.target.value);
@@ -47,7 +47,7 @@ const SignUp = () => {
 		}));
 	};
 
-	const onFormSubmit = () => {
+	const handleFormSubmit = () => {
 		const fv = Object.values(form).every((field) => field.validity == true);
 		setIsFormValid(fv);
 		if (!fv) return;
@@ -93,7 +93,7 @@ const SignUp = () => {
 					name="fullName"
 					autoComplete="off"
 					size="medium"
-					onChange={(e) => onFormChange(e)}
+					onChange={(e) => handleFormChange(e)}
 				/>
 				<div className="p-2"></div>
 				<TextField
@@ -108,7 +108,7 @@ const SignUp = () => {
 					name="email"
 					autoComplete="off"
 					size="medium"
-					onChange={(e) => onFormChange(e)}
+					onChange={(e) => handleFormChange(e)}
 				/>
 				<div className="p-2"></div>
 				<PasswordInput
@@ -116,7 +116,7 @@ const SignUp = () => {
 					helperText="The password is not valid."
 					label="Password"
 					name="password"
-					onChange={onFormChange}
+					onChange={handleFormChange}
 					variant="outlined"
 				/>
 				<div className="p-2"></div>
@@ -125,14 +125,14 @@ const SignUp = () => {
 					helperText="The passwords are not the same."
 					label="Repeate password"
 					name="repeatPassword"
-					onChange={onFormChange}
+					onChange={handleFormChange}
 					variant="outlined"
 				/>
 			</div>
 			<div className="w-[80%] flex flex-row justify-between items-center pb-5">
 				<div className="w-[43%]">
 					<Button
-						onClick={onSignIn}
+						onClick={handleSignIn}
 						variant="outlined"
 						size="medium"
 						fullWidth
@@ -144,7 +144,7 @@ const SignUp = () => {
 				</div>
 				<div className="w-[43%]">
 					<Button
-						onClick={onFormSubmit}
+						onClick={handleFormSubmit}
 						variant="contained"
 						size="medium"
 						fullWidth
