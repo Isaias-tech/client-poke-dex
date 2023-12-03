@@ -2,10 +2,17 @@
     <img width="33%" src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pok%C3%A9mon_logo.svg"> 
 </p>
 
-# PokeDex
+# [PokeDex](https://pokedex.isaias-tech.com/)
 
 The PokeDex web application is designed to provide users with an interactive platform to explore, search, and manage Pokémons. Users can sign up, sign in, view a list of Pokémon fetched from the [PokeAPI](https://pokeapi.co/), search for specific Pokémon by name, add or remove Pokémon from their favorites, and easily access their favorite Pokémon collection.
 
+## Important links
+
+### Design:
+
+In the fallowing link, you can find the mobile, tablet and desktop design of the app, also some of the assets and componets. It also have basic configuration for prototypes so that you can have a preview on the design.
+
+[![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/file/aUA5Vga9G60P7Xu57xM79i/PokeDex?type=design&node-id=0%3A1&mode=design&t=E6fOUsbIVyJCSR3w-1)
 
 ## Requirements
 
@@ -21,9 +28,6 @@ Required Application Screens and system requirements:
     - Allow users to add Pokémon to their favorites list directly from the main Pokémon list screen.
     - Develop a separate screen where users can view their list of favorite Pokémon.
 
-
-
-
 ## Tech Stack
 
 The following tools were used during the design process:
@@ -32,7 +36,6 @@ The following tools were used during the design process:
 | :------- | :------------------------- |
 | [![Adobe Photoshop](https://img.shields.io/badge/adobe%20photoshop-%2331A8FF.svg?style=for-the-badge&logo=adobe%20photoshop&logoColor=white)](https://www.adobe.com/products/photoshop.html) | Some of the assets were created or edited with it. |
 | [![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/) | The designs for mobile, tablet and desktop were made there. (Also the assets and color selection).|
-
 
 
 During the development process the following tools and technologies where used:
@@ -53,6 +56,17 @@ During the development process the following tools and technologies where used:
 |[![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)](https://mui.com/)| Library containing a number of UI Components that allow for faster development and customization. |
 |[![Hamburger React](https://img.shields.io/badge/Hamburger_React-blue)](https://hamburger-react.netlify.app/)| Library for animated hamburger button component. |
 |[![NoStick](https://img.shields.io/badge/NoStick-green)](https://notistack.com/)| MUI recommended library for multiple snackbars notification management. |
+
+During the deployment process the following tools and technologies are used:
+
+| Tools and technologies | Description |
+| :--------------------- | :---------- |
+| [![DigitalOcean](https://img.shields.io/badge/DigitalOcean-%230167ff.svg?style=for-the-badge&logo=digitalOcean&logoColor=white)](https://www.digitalocean.com/) | VPS or Droplet where the app is being hosted. |
+| [![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)](https://www.nginx.com/) | To serve the app to internet. |
+| [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/) | To build the app isolated from VPS config. |
+| [![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)](https://docs.github.com/en/actions) | When push is made to main branch the github actions executes. |
+| [![CertBot](https://img.shields.io/badge/CertBot-black)](https://certbot.eff.org/) | For auto SSL certificate with Let's Encrypt. |
+
 
 ## Run Locally
 
@@ -78,19 +92,6 @@ Start the server
 
 ```bash
   npm run dev
-```
-
-
-## Deployment
-
-To deploy this project run
-
-```bash
-  npm run build
-```
-
-```bash
-  npm run deploy
 ```
 
 ## API Integration
